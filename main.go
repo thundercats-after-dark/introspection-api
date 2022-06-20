@@ -3,8 +3,9 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/graphql-go/graphql"
 	"log"
+
+	"github.com/graphql-go/graphql"
 )
 
 func main() {
@@ -26,8 +27,11 @@ func main() {
 		log.Fatalf("failed to create schema, error: %v", err)
 	}
 
-	params := graphql.Params{Schema: schema, RequestString: `{ hello }`}
-	result := graphql.Do(params)
+	result := graphql.Do(graphql.Params{
+		Schema:        schema,
+		RequestString: `{ hello }`,
+	})
+
 	if result.HasErrors() {
 		log.Fatalf("failed to execute graphql operation, errors %+v", result.Errors)
 	}
