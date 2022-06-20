@@ -3,12 +3,11 @@
 A chance to learn some golang by writing the same app I normally do - an API
 server for retrieving details about myself.
 
-
 ## Getting Started
 
 This application is using Bazel because that's the build system we use at work.
 I wanted to spend some time learning it, so I included it in this project. Since
-we are using Bazel, you don't actually need Go installed on your computer. 
+we are using Bazel, you don't actually need Go installed on your computer.
 Instead, install Bazelisk (Bazel version manager) and some related dev tools:
 
 ```sh
@@ -41,8 +40,8 @@ bazel run //:gazelle -- update-repos \
 
 At this point, your 3rd-party library will be available for your code to use.
 Once you have a dependency established in one of your source files, run the
-`//:gazelle` target to add the dependency to Bazel so your application will
-compile and run correctly:
+`//:gazelle` target to add your source file's dependency on the 3rd-party
+library in Bazel so your application will compile and run correctly:
 
 ```sh
 bazel run //:gazelle
