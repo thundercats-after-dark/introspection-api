@@ -1,0 +1,12 @@
+{
+  "name": "my-api-golang GraphQL Schema",
+  "schemaPath": "graph/schema.graphql",
+  "extensions": {
+    "endpoints": {
+      "Localhost": {
+        "url": "http://localhost:8080/graphql",
+        "introspect": true
+      }
+    }
+  }
+}
