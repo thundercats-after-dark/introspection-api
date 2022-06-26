@@ -8,8 +8,11 @@ import (
 	"fmt"
 	"math/rand"
 
+	"github.com/aws/aws-sdk-go-v2/config"
+	"github.com/aws/aws-sdk-go-v2/service/dynamodb"
 	"github.com/chadxz/my-api-golang/graph/generated"
 	"github.com/chadxz/my-api-golang/graph/model"
+	"github.com/kelseyhightower/envconfig"
 )
 
 func (r *mutationResolver) CreateTodo(ctx context.Context, input model.NewTodo) (*model.Todo, error) {
@@ -28,6 +31,42 @@ func (r *mutationResolver) CreateTodo(ctx context.Context, input model.NewTodo) 
 
 func (r *queryResolver) Todos(ctx context.Context) ([]*model.Todo, error) {
 	return r.todos, nil
+}
+
+func (r *queryResolver) DynamoTables(ctx context.Context) ([]*model.DynamoTable, error) {
+	var env APIEnvironment
+	envconfig.MustProcess("", &env)
+	cfg, err := config.LoadDefaultConfig(ctx, func(opts *config.LoadOptions) error {
+		opts.Region = "us-east-1"
+		return nil
+	})
+	if err != nil {
+		return []*model.DynamoTable{}, err
+	}
+
+	svc := dynamodb.NewFromConfig(cfg, func(o *dynamodb.Options) {
+		if env.DynamoEndpointURL != "" {
+			o.EndpointResolver = dynamodb.EndpointResolverFromURL(env.DynamoEndpointURL)
+		}
+	})
+	p := dynamodb.NewListTablesPaginator(svc, nil, func(o *dynamodb.ListTablesPaginatorOptions) {
+		o.StopOnDuplicateToken = true
+
+	})
+
+	var result []*model.DynamoTable
+	for p.HasMorePages() {
+		out, err := p.NextPage(ctx)
+		if err != nil {
+			return []*model.DynamoTable{}, err
+		}
+
+		for _, tableName := range out.TableNames {
+			result = append(result, &model.DynamoTable{Name: tableName})
+		}
+	}
+
+	return result, nil
 }
 
 func (r *todoResolver) User(ctx context.Context, obj *model.Todo) (*model.User, error) {

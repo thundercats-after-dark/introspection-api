@@ -1,0 +1,25 @@
+services:
+  api:
+    build: .
+    container_name: api
+    ports:
+      - "8080:8080"
+    links:
+      - dynamodb
+    environment:
+      AWS_ACCESS_KEY_ID: fake_key
+      AWS_SECRET_ACCESS_KEY: fake_access_key
+      DYNAMO_ENDPOINT_URL: "http://dynamodb:8000"
+  dynamodb:
+    # https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/DynamoDBLocal.DownloadingAndRunning.html#docker
+    image: public.ecr.aws/aws-dynamodb-local/aws-dynamodb-local:1.18.0
+    command: "-jar DynamoDBLocal.jar -sharedDb -dbPath /home/dynamodblocal/data"
+    container_name: dynamodb
+    ports:
+      - "8000:8000"
+    volumes:
+      - dynamodata:/home/dynamodblocal/data
+    working_dir: /home/dynamodblocal
+    user: root # required to write to the volume for some reason
+volumes:
+  dynamodata:

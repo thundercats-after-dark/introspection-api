@@ -2,6 +2,10 @@
 #
 # https://gqlgen.com/getting-started/
 
+type DynamoTable {
+  name: String!
+}
+
 type Todo {
   id: ID!
   text: String!
@@ -16,6 +20,7 @@ type User {
 
 type Query {
   todos: [Todo!]!
+  dynamoTables: [DynamoTable]!
 }
 
 input NewTodo {
