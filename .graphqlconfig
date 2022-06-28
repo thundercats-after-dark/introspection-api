@@ -1,5 +1,5 @@
 {
-  "name": "my-api-golang GraphQL Schema",
+  "name": "introspection-api GraphQL Schema",
   "schemaPath": "graph/schema.graphql",
   "extensions": {
     "endpoints": {

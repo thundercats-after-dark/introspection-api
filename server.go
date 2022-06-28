@@ -7,8 +7,8 @@ import (
 
 	"github.com/99designs/gqlgen/graphql/handler"
 	"github.com/99designs/gqlgen/graphql/playground"
-	"github.com/chadxz/my-api-golang/graph"
-	"github.com/chadxz/my-api-golang/graph/generated"
+	"github.com/thundercats-after-dark/introspection-api/graph"
+	"github.com/thundercats-after-dark/introspection-api/graph/generated"
 )
 
 const defaultPort = "8080"

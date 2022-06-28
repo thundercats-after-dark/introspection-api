@@ -1,5 +1,5 @@
-resource "aws_dynamodb_table" "dynamodb-table-my-api-golang" {
-  name           = "my-api-golang"
+resource "aws_dynamodb_table" "dynamodb-table-introspection-api" {
+  name           = "introspection-api"
   billing_mode   = "PAY_PER_REQUEST"
   table_class    = "STANDARD"
   stream_enabled = false

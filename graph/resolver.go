@@ -3,7 +3,7 @@ package graph
 //go:generate go run github.com/99designs/gqlgen generate
 
 import (
-	"github.com/chadxz/my-api-golang/graph/model"
+	"github.com/thundercats-after-dark/introspection-api/graph/model"
 )
 
 // This file will not be regenerated automatically.

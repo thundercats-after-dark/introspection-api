@@ -10,9 +10,9 @@ import (
 
 	"github.com/aws/aws-sdk-go-v2/config"
 	"github.com/aws/aws-sdk-go-v2/service/dynamodb"
-	"github.com/chadxz/my-api-golang/graph/generated"
-	"github.com/chadxz/my-api-golang/graph/model"
 	"github.com/kelseyhightower/envconfig"
+	"github.com/thundercats-after-dark/introspection-api/graph/generated"
+	"github.com/thundercats-after-dark/introspection-api/graph/model"
 )
 
 func (r *mutationResolver) CreateTodo(ctx context.Context, input model.NewTodo) (*model.Todo, error) {

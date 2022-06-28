@@ -1,5 +1,6 @@
 data "aws_iam_policy_document" "github-actions-assume-role" {
   statement {
+    sid     = "AssumeRole"
     actions = ["sts:AssumeRoleWithWebIdentity"]
     principals {
       type        = "Federated"
@@ -8,7 +9,7 @@ data "aws_iam_policy_document" "github-actions-assume-role" {
     condition {
       test     = "StringLike"
       variable = "token.actions.githubusercontent.com:sub"
-      values   = ["repo:chadxz/my-api-golang:*"]
+      values   = ["repo:thundercats-after-dark/introspection-api:*"]
     }
   }
 }
@@ -20,5 +21,5 @@ resource "aws_iam_role" "github-actions" {
 
 resource "aws_iam_role_policy_attachment" "github-actions-admin" {
   policy_arn = "arn:aws:iam::aws:policy/AdministratorAccess"
-  role = aws_iam_role.github-actions.name
+  role       = aws_iam_role.github-actions.name
 }
