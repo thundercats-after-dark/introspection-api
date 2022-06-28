@@ -5,6 +5,6 @@ terraform {
     region         = "us-east-1"
     bucket         = "thundercats-after-dark-tfstate"
     dynamodb_table = "thundercats-after-dark-tfstate"
-    key            = "my-api-golang"
+    key            = "introspection-api"
   }
 }

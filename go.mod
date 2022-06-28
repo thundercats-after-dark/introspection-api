@@ -1,4 +1,4 @@
-module github.com/chadxz/my-api-golang
+module github.com/thundercats-after-dark/introspection-api
 
 go 1.18
 
