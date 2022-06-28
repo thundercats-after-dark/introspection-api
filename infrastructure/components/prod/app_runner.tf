@@ -25,3 +25,34 @@ resource "aws_apprunner_service" "service" {
     instance_role_arn = aws_iam_role.apprunner-instance-role.arn
   }
 }
+
+data "aws_route53_zone" "cloud-thundercats-dev-zone" {
+  name = "cloud.thundercats.dev"
+}
+
+resource "aws_apprunner_custom_domain_association" "introspection-api-domain" {
+  domain_name = "introspect.cloud.thundercats.dev"
+  service_arn = aws_apprunner_service.service.arn
+}
+
+# must `terraform apply -target="aws_apprunner_service.service" -target="aws_apprunner_custom_domain_association.introspection-api-domain"
+# the first time due to for_each
+resource "aws_route53_record" "introspection-api-validation-cnames" {
+  for_each = {for record in aws_apprunner_custom_domain_association.introspection-api-domain.certificate_validation_records : record.name => record}
+
+  name    = each.value.name
+  type    = each.value.type
+  zone_id = data.aws_route53_zone.cloud-thundercats-dev-zone.zone_id
+  ttl     = 3600
+  records = [each.value.value]
+}
+
+resource "aws_route53_record" "introspection-api-cname" {
+  name    = "introspect.cloud.thundercats.dev"
+  type    = "CNAME"
+  zone_id = data.aws_route53_zone.cloud-thundercats-dev-zone.zone_id
+  ttl     = 3600
+  records = [
+    aws_apprunner_service.service.service_url
+  ]
+}

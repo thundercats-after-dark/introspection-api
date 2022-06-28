@@ -37,3 +37,22 @@ docker-compose up # load up the app
 3. Populate the generated resolver with the implementation
 
 [graph/schema.graphqls]: graph/schema.graphqls
+
+## Deploying changes
+
+Changes to the application are deployed automatically using the "AWS App Runner"
+GitHub Actions Workflow when merged to the main branch.
+
+## Running Terraform
+
+To run Terraform against production, you'll need access to the "Thundercats 
+After Dark" AWS Account. Reach out to one of the organization members for 
+access. Once added, generate yourself some access keys, activate your profile,
+and:
+
+```sh
+cd infrastructure/components/prod
+tfswitch
+terraform init
+terraform apply
+```
