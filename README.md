@@ -6,8 +6,7 @@ server for retrieving details about myself.
 This project is a Golang API built using [gqlgen][]. It stores its state in an 
 Amazon DynamoDB table. Running locally leverages the [Dynamodb-Local][] project.
 
-You can view the deployed application at [https://introspect.cloud.
-thundercats.dev/](https://introspect.cloud.thundercats.dev/).
+You can view the deployed application at [https://introspect.cloud.thundercats.dev/](https://introspect.cloud.thundercats.dev/).
 
 [gqlgen]: https://gqlgen.com
 [dynamodb-local]: https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/DynamoDBLocal.html
