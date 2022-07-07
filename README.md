@@ -33,12 +33,12 @@ docker-compose up # load up the app
 
 ### Adding a New Graph Node
 
-1. Update [graph/schema.graphqls][] with your new graph node
+1. Update [app/graph/schema.graphqls][] with your new graph node
 2. Run `go generate ./...` to generate supporting code (models, stub 
    resolvers, etc)
 3. Populate the generated resolver with the implementation
 
-[graph/schema.graphqls]: graph/schema.graphqls
+[app/graph/schema.graphqls]: app/graph/schema.graphqls
 
 ## Deploying changes
 

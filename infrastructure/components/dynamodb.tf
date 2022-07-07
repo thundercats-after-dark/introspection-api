@@ -4,9 +4,9 @@ resource "aws_dynamodb_table" "dynamodb-table-introspection-api" {
   table_class    = "STANDARD"
   stream_enabled = false
 
-  hash_key = "id"
+  hash_key = "pk"
   attribute {
-    name = "id"
+    name = "pk"
     type = "S"
   }
 

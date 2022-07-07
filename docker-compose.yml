@@ -9,7 +9,7 @@ services:
     environment:
       AWS_ACCESS_KEY_ID: fake_key
       AWS_SECRET_ACCESS_KEY: fake_access_key
-      DYNAMO_ENDPOINT_URL: "http://dynamodb:8000"
+      DYNAMODB_ENDPOINT_URL: "http://dynamodb:8000"
   dynamodb:
     # https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/DynamoDBLocal.DownloadingAndRunning.html#docker
     image: public.ecr.aws/aws-dynamodb-local/aws-dynamodb-local:1.18.0

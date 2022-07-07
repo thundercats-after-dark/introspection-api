@@ -18,9 +18,15 @@ type User {
   name: String!
 }
 
+type Person {
+  email: String!
+  name: String
+}
+
 type Query {
   todos: [Todo!]!
   dynamoTables: [DynamoTable]!
+  people: [Person]!
 }
 
 input NewTodo {

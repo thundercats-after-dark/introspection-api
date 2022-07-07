@@ -8,19 +8,17 @@ import (
 	"fmt"
 	"math/rand"
 
-	"github.com/aws/aws-sdk-go-v2/config"
 	"github.com/aws/aws-sdk-go-v2/service/dynamodb"
-	"github.com/kelseyhightower/envconfig"
-	"github.com/thundercats-after-dark/introspection-api/graph/generated"
-	"github.com/thundercats-after-dark/introspection-api/graph/model"
+	"github.com/thundercats-after-dark/introspection-api/app/graph/generated"
+	model2 "github.com/thundercats-after-dark/introspection-api/app/graph/model"
 )
 
-func (r *mutationResolver) CreateTodo(ctx context.Context, input model.NewTodo) (*model.Todo, error) {
-	todo := &model.Todo{
+func (r *mutationResolver) CreateTodo(ctx context.Context, input model2.NewTodo) (*model2.Todo, error) {
+	todo := &model2.Todo{
 		ID:     fmt.Sprintf("T%d", rand.Int()),
 		Text:   input.Text,
 		UserID: input.UserID,
-		User: &model.User{
+		User: &model2.User{
 			ID:   input.UserID,
 			Name: "user " + input.UserID,
 		},
@@ -29,48 +27,46 @@ func (r *mutationResolver) CreateTodo(ctx context.Context, input model.NewTodo) 
 	return todo, nil
 }
 
-func (r *queryResolver) Todos(ctx context.Context) ([]*model.Todo, error) {
+func (r *queryResolver) Todos(ctx context.Context) ([]*model2.Todo, error) {
 	return r.todos, nil
 }
 
-func (r *queryResolver) DynamoTables(ctx context.Context) ([]*model.DynamoTable, error) {
-	var env APIEnvironment
-	envconfig.MustProcess("", &env)
-	cfg, err := config.LoadDefaultConfig(ctx, func(opts *config.LoadOptions) error {
-		opts.Region = "us-east-1"
-		return nil
-	})
-	if err != nil {
-		return []*model.DynamoTable{}, err
-	}
-
-	svc := dynamodb.NewFromConfig(cfg, func(o *dynamodb.Options) {
-		if env.DynamoEndpointURL != "" {
-			o.EndpointResolver = dynamodb.EndpointResolverFromURL(env.DynamoEndpointURL)
-		}
-	})
-	p := dynamodb.NewListTablesPaginator(svc, nil, func(o *dynamodb.ListTablesPaginatorOptions) {
+func (r *queryResolver) DynamoTables(ctx context.Context) ([]*model2.DynamoTable, error) {
+	p := dynamodb.NewListTablesPaginator(r.DynamoDBClient, nil, func(o *dynamodb.ListTablesPaginatorOptions) {
 		o.StopOnDuplicateToken = true
-
 	})
 
-	var result []*model.DynamoTable
+	var result []*model2.DynamoTable
 	for p.HasMorePages() {
 		out, err := p.NextPage(ctx)
 		if err != nil {
-			return []*model.DynamoTable{}, err
+			return []*model2.DynamoTable{}, err
 		}
 
 		for _, tableName := range out.TableNames {
-			result = append(result, &model.DynamoTable{Name: tableName})
+			result = append(result, &model2.DynamoTable{Name: tableName})
 		}
 	}
 
 	return result, nil
 }
 
-func (r *todoResolver) User(ctx context.Context, obj *model.Todo) (*model.User, error) {
-	return &model.User{
+func (r *queryResolver) People(ctx context.Context) ([]*model2.Person, error) {
+
+	var result []*model2.Person
+
+	// result = append(result, &model.Person{
+	// 	Email: "me@here.com",
+	// 	Name:  PointerOf("Chad McElligott"),
+	// }, &model.Person{
+	// 	Email: "monkeymoo@foo.com",
+	// 	Name:  PointerOf("Avery Anne Seifried-McElligott"),
+	// })
+	return result, nil
+}
+
+func (r *todoResolver) User(ctx context.Context, obj *model2.Todo) (*model2.User, error) {
+	return &model2.User{
 		ID:   obj.UserID,
 		Name: "user" + obj.UserID,
 	}, nil
