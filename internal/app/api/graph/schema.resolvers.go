@@ -9,8 +9,8 @@ import (
 	"math/rand"
 
 	"github.com/aws/aws-sdk-go-v2/service/dynamodb"
-	"github.com/thundercats-after-dark/introspection-api/app/graph/generated"
-	model2 "github.com/thundercats-after-dark/introspection-api/app/graph/model"
+	"github.com/thundercats-after-dark/introspection-api/internal/app/api/graph/generated"
+	model2 "github.com/thundercats-after-dark/introspection-api/internal/app/api/graph/model"
 )
 
 func (r *mutationResolver) CreateTodo(ctx context.Context, input model2.NewTodo) (*model2.Todo, error) {

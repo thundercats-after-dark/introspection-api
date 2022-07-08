@@ -13,7 +13,7 @@ import (
 
 	"github.com/99designs/gqlgen/graphql"
 	"github.com/99designs/gqlgen/graphql/introspection"
-	model2 "github.com/thundercats-after-dark/introspection-api/app/graph/model"
+	model2 "github.com/thundercats-after-dark/introspection-api/internal/app/api/graph/model"
 	gqlparser "github.com/vektah/gqlparser/v2"
 	"github.com/vektah/gqlparser/v2/ast"
 )

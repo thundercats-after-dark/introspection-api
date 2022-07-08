@@ -3,3 +3,6 @@ Dockerfile
 .gitignore
 README.md
 /infrastructure
+.git
+.github
+.idea

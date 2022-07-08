@@ -4,7 +4,7 @@ package graph
 
 import (
 	"github.com/aws/aws-sdk-go-v2/service/dynamodb"
-	"github.com/thundercats-after-dark/introspection-api/app/graph/model"
+	"github.com/thundercats-after-dark/introspection-api/internal/app/api/graph/model"
 )
 
 // This file will not be regenerated automatically.

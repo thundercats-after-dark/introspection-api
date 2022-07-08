@@ -5,7 +5,7 @@ WORKDIR /app
 COPY go.mod go.sum ./
 RUN go mod download
 COPY . ./
-RUN CGO_ENABLED=0 go build -o /api app
+RUN CGO_ENABLED=0 go build -o /api cmd/api/main.go
 
 # https://github.com/GoogleContainerTools/distroless
 FROM gcr.io/distroless/static-debian10

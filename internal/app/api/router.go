@@ -1,4 +1,4 @@
-package main
+package api
 
 import (
 	"context"
@@ -8,9 +8,9 @@ import (
 	awscfg "github.com/aws/aws-sdk-go-v2/config"
 	"github.com/aws/aws-sdk-go-v2/service/dynamodb"
 	"github.com/go-chi/chi/v5"
-	"github.com/thundercats-after-dark/introspection-api/app/config"
-	"github.com/thundercats-after-dark/introspection-api/app/graph"
-	"github.com/thundercats-after-dark/introspection-api/app/graph/generated"
+	"github.com/thundercats-after-dark/introspection-api/internal/app/api/config"
+	"github.com/thundercats-after-dark/introspection-api/internal/app/api/graph"
+	"github.com/thundercats-after-dark/introspection-api/internal/app/api/graph/generated"
 )
 
 const GraphQLEndpoint = "/graphql"

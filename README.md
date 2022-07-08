@@ -38,7 +38,7 @@ docker-compose up # load up the app
    resolvers, etc)
 3. Populate the generated resolver with the implementation
 
-[app/graph/schema.graphqls]: app/graph/schema.graphqls
+[app/graph/schema.graphqls]: internal/app/api/graph/schema.graphqls
 
 ## Deploying changes
 
