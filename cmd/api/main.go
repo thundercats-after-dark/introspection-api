@@ -20,7 +20,6 @@ func main() {
 		log.Fatalf("Failed to build router: %v", err)
 	}
 
-	log.Printf("config is %#v", cfg)
 	log.Printf("connect to http://localhost:%s/ for GraphQL playground", defaultPort)
 	log.Fatal(http.ListenAndServe(":"+defaultPort, router))
 }
