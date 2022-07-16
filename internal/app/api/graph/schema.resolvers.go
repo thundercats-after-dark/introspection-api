@@ -52,7 +52,6 @@ func (r *queryResolver) DynamoTables(ctx context.Context) ([]*model2.DynamoTable
 }
 
 func (r *queryResolver) People(ctx context.Context) ([]*model2.Person, error) {
-
 	var result []*model2.Person
 
 	// result = append(result, &model.Person{
