@@ -10,15 +10,15 @@ import (
 
 	"github.com/aws/aws-sdk-go-v2/service/dynamodb"
 	"github.com/thundercats-after-dark/introspection-api/internal/app/api/graph/generated"
-	model2 "github.com/thundercats-after-dark/introspection-api/internal/app/api/graph/model"
+	"github.com/thundercats-after-dark/introspection-api/internal/app/api/graph/model"
 )
 
-func (r *mutationResolver) CreateTodo(ctx context.Context, input model2.NewTodo) (*model2.Todo, error) {
-	todo := &model2.Todo{
+func (r *mutationResolver) CreateTodo(ctx context.Context, input model.NewTodo) (*model.Todo, error) {
+	todo := &model.Todo{
 		ID:     fmt.Sprintf("T%d", rand.Int()),
 		Text:   input.Text,
 		UserID: input.UserID,
-		User: &model2.User{
+		User: &model.User{
 			ID:   input.UserID,
 			Name: "user " + input.UserID,
 		},
@@ -27,32 +27,32 @@ func (r *mutationResolver) CreateTodo(ctx context.Context, input model2.NewTodo)
 	return todo, nil
 }
 
-func (r *queryResolver) Todos(ctx context.Context) ([]*model2.Todo, error) {
+func (r *queryResolver) Todos(ctx context.Context) ([]*model.Todo, error) {
 	return r.todos, nil
 }
 
-func (r *queryResolver) DynamoTables(ctx context.Context) ([]*model2.DynamoTable, error) {
+func (r *queryResolver) DynamoTables(ctx context.Context) ([]*model.DynamoTable, error) {
 	p := dynamodb.NewListTablesPaginator(r.DynamoDBClient, nil, func(o *dynamodb.ListTablesPaginatorOptions) {
 		o.StopOnDuplicateToken = true
 	})
 
-	var result []*model2.DynamoTable
+	var result []*model.DynamoTable
 	for p.HasMorePages() {
 		out, err := p.NextPage(ctx)
 		if err != nil {
-			return []*model2.DynamoTable{}, err
+			return []*model.DynamoTable{}, err
 		}
 
 		for _, tableName := range out.TableNames {
-			result = append(result, &model2.DynamoTable{Name: tableName})
+			result = append(result, &model.DynamoTable{Name: tableName})
 		}
 	}
 
 	return result, nil
 }
 
-func (r *queryResolver) People(ctx context.Context) ([]*model2.Person, error) {
-	var result []*model2.Person
+func (r *queryResolver) People(ctx context.Context) ([]*model.Person, error) {
+	var result []*model.Person
 
 	// result = append(result, &model.Person{
 	// 	Email: "me@here.com",
@@ -64,8 +64,8 @@ func (r *queryResolver) People(ctx context.Context) ([]*model2.Person, error) {
 	return result, nil
 }
 
-func (r *todoResolver) User(ctx context.Context, obj *model2.Todo) (*model2.User, error) {
-	return &model2.User{
+func (r *todoResolver) User(ctx context.Context, obj *model.Todo) (*model.User, error) {
+	return &model.User{
 		ID:   obj.UserID,
 		Name: "user" + obj.UserID,
 	}, nil
